@@ -3,19 +3,31 @@ const express = require('express'),
     morgan = require('morgan'),
     bodyParser = require('body-parser'),
     uuid = require('uuid');
+//sets  express’s functionality to a variable
 const app = express();
-
+//invokes the middleware module body-parser.
+//it allows you to read the “body” of HTTP requests within your request handlers simply by using the code req.body.
+app.use(bodyParser.json());
+//invokes middle ware function with "common" parameters using the default format
+app.use(morgan("common"));
 
 let users = [
     {
         id: 1,
-        name: "Kim",
+        name: "Daniel Drower",
         favoriteMovies: []
     },
     {
         id: 2,
-        name: "Joe",
+        name: "Joe Galop",
         favoriteMovies: ["The shawshank redemption"]
+    },
+
+    {
+        id: 3,
+        name: "Michael Sraton",
+        favoriteMovies: ["Joker"]
+
     }
 ];
 
@@ -68,31 +80,31 @@ let movies = [
 
     let directors = [
       {
-        name: 'Todd Phillips',
-        description: 'Todd Phillips is an American filmmaker and actor who got his start by directing the comedy films Road Trip and Old School, the earlier inspired EuroTrip. He also directed Starsky & Hutch, The Hangover trilogy, Due Date, War Dogs and School for Scoundrels. Phillips directed Joker',
-        birth_year: 1970,
-        death_year: null
+        "name": 'Todd Phillips',
+        "description": 'Todd Phillips is an American filmmaker and actor who got his start by directing the comedy films Road Trip and Old School, the earlier inspired EuroTrip. He also directed Starsky & Hutch, The Hangover trilogy, Due Date, War Dogs and School for Scoundrels. Phillips directed Joker',
+        "birth_year": 1970,
+        "death_year": null
 
       },
     {
-      name:"Frank Darabont",
-      description:"Three-time Oscar nominee Frank Darabont was born in a refugee camp in 1959 in Montbeliard, France, the son of Hungarian parents who had fled Budapest during the failed 1956 Hungarian revolution. Brought to America as an infant",
-      birth_year: 1959,
-      death_year: null
+      "name":"Frank Darabont",
+      "description":"Three-time Oscar nominee Frank Darabont was born in a refugee camp in 1959 in Montbeliard, France, the son of Hungarian parents who had fled Budapest during the failed 1956 Hungarian revolution. Brought to America as an infant",
+      "birth_year": 1959,
+      "death_year": null
     },
 
     {
-      name:"Martin Scorsese",
-      description: "Martin Charles Scorsese is an American film director, producer, and screenwriter. He is the recipient of many accolades, including nine Academy Award nominations for Best Director, four British Academy Film Awards, three Golden Globe Awards, and two Directors Guild of America Awards.",
-      birth_year: 1942,
-      death_year: null
+      "name":"Martin Scorsese",
+      "description": "Martin Charles Scorsese is an American film director, producer, and screenwriter. He is the recipient of many accolades, including nine Academy Award nominations for Best Director, four British Academy Film Awards, three Golden Globe Awards, and two Directors Guild of America Awards.",
+      "birth_year": 1942,
+      "death_year": null
     },
 
     {
-      name: "Quentin Tarantino",
-      description:"Quentin Jerome Tarantino is an American filmmaker, film critic, and actor. His films are characterized by nonlinear storylines, dark humor, stylized violence, extended dialogue, pervasive use of profanity, ensemble casts, references to popular culture, alternate history, and neo-noir.",
-      birth_year: 1963,
-      death_year: null
+      "name": "Quentin Tarantino",
+      "description":"Quentin Jerome Tarantino is an American filmmaker, film critic, and actor. His films are characterized by nonlinear storylines, dark humor, stylized violence, extended dialogue, pervasive use of profanity, ensemble casts, references to popular culture, alternate history, and neo-noir.",
+      "birth_year": 1963,
+      "death_year": null
     },
 
 
