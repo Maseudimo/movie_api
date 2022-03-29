@@ -17,6 +17,26 @@ const mongoose = require('mongoose');
 // Import auth.js file
 let auth = require('./auth')(app);
 
+const cors = require('cors');
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
+      let message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
+      return callback(new Error(message ), false);
+    }
+    return callback(null, true);
+  }
+}));
+
+const bcrypt = require('bcrypt');
+
+const { check, validationResult } = require('express-validator');
+
+
+
 // Require passport module & import passport.js file
 const passport = require('passport');
 require('./passport');
@@ -158,7 +178,7 @@ app.put('/users/:Username', passport.authenticate('jwt', {session: false}), (req
     });
 });
 
-// CREATE: Allow users to add a movie to their list of favorites
+// CREATE: Allow users to add a movie to their list of users favorites
 app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', {session: false}), (req, res) => {
   Users.findOneAndUpdate({Username : req.params.Username}, // Find user by username
     {$push: { FavoriteMovies: req.params.MovieID}}, // Add movie to the list
@@ -213,7 +233,7 @@ app.use((err, req, res, next) => {
   res.status(500).send('Something broke!');
 });
 // Listen to port 8000
-const port = 8080;
-app.listen(port, () => {
-  console.log('Your app is listening on port ' + port);
+const port = process.env.PORT || 8080;
+app.listen(port, '0.0.0.0',() => {
+ console.log('Listening on Port ' + port);
 });
