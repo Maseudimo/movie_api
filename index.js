@@ -41,8 +41,9 @@ const { check, validationResult } = require('express-validator');
 const passport = require('passport');
 require('./passport');
 
-// Connecting to MongoDB FemMoviesDB
-mongoose.connect('mongodb://localhost:27017/', { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect("mongodb://localhost:27017/test", { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+// Mongoose end
 
 // Log basic request data in terminal using Morgan middleware library
 app.use(morgan('common'));
@@ -237,3 +238,8 @@ const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0',() => {
  console.log('Listening on Port ' + port);
 });
+
+mongoimport --uri mongodb+srv://meho99:Assasino123@mehosapps.v4eij.mongodb.net/myFlixDB --collection movies --type json --file ../documents/exported_collections/movies.json
+
+
+mongoimport --uri mongodb+srv://myFlixDBadmin:12345@myflixdb.dcdfl.mongodb.net/myFlixDB --collection movies --type json --file ../exported_collections/movies.json
