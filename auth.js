@@ -1,38 +1,38 @@
-const jwtSecret = 'your_jwt_secret'; //(Same key as in JWTStrategy)
-
+const jwtSecret = 'your_jwt_secret'; // This has to be the same key used in the JWTStrategy
 const jwt = require('jsonwebtoken'),
+
   passport = require('passport');
 
-require('./passport.js');
+require('./passport'); // Your local passport file
 
-// Function to create JWT (expiring in 7 days, using HS256 algorithm to encode)
 let generateJWTToken = (user) => {
+  
   return jwt.sign(user, jwtSecret, {
-    subject: user.Username,
-    expiresIn: '7d',
-    algorithm: 'HS256'
+    subject: user.Username, // This is the username you’re encoding in the JWT
+    expiresIn: '7d', // This specifies that the token will expire in 7 days
+    algorithm: 'HS256' // This is the algorithm used to “sign” or encode the values of the JWT
   });
-};
+}
+
+
 
 /* POST login. */
 module.exports = (router) => {
   router.post('/login', (req, res) => {
-    passport.authenticate('local', {session: false}, (err, user, info) => {
-      if (err || !user) {
+    passport.authenticate('local', { session: false }, (error, user, info) => {
+      if (error || !user) {
         return res.status(400).json({
-          message: 'Something went wrong',
+          message: 'Something is not right',
           user: user
         });
       }
-      req.login(user, {session: false}, (err) => {
-        if (err) {
-          res.status(500).send(err);
+      req.login(user, { session: false }, (error) => {
+        if (error) {
+          res.send(error);
         }
-        // If user exists, generate JWT
         let token = generateJWTToken(user.toJSON());
-        // Return the generated token
-        return res.json({user, token});
+        return res.json({ user, token });
       });
-    })(req,res);
+    })(req, res);
   });
 }
