@@ -60,6 +60,17 @@ app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) 
   });
 });
 
+// Get all users
+app.get('/users', passport.authenticate('jwt', {session: false}), (req, res) => {
+  Users.find()
+    .then((users) => {
+      res.status(201).json(users);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send('Error: ' + err);
+    });
+});
 
 /**
  * http GET request to retrieve username from API
