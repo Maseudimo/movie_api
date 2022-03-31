@@ -13,12 +13,16 @@ const express = require('express');
 
 const router = express.Router();
 const mongoose = require('mongoose');
+
 const Models = require('./models.js');
 
 const Movies = Models.Movie;
 const Users = Models.User;
+
+
 mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 const { check, validationResult } = require('express-validator');
+
 
 const app = express();
   app.use(morgan('common'));
@@ -27,10 +31,12 @@ const app = express();
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(router);
 
+
   app.use(cors());
   let auth = require('./auth')(app);
   const passport = require('passport');
   require('./passport');
+
 
 
   app.use(express.json());
@@ -39,6 +45,7 @@ const app = express();
     console.error(err.stack);
     res.status(500).send(err);
 });
+
 
 
 
@@ -253,7 +260,7 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
     });
 });
 app.get('/', (req, res) => {
-  res.send('Welcome to Kino Noir!');
+  res.send('Welcome to mehosapp!');
 });
 /**
  * setting up the listening port in the development environment
