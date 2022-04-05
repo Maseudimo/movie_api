@@ -73,7 +73,7 @@ app.get('/movies',
 
 // READ: Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user
 app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req, res) => {
-   Movies.findOne({ 'Movies.Title': req.params.Title }) // Find the movie by title
+   Movies.findOne({ 'Movie.Title': req.params.Title }) // Find the movie by title
      .then((movie) => {
        if (movie) { // If movie was found, return json, else throw error
          res.status(200).json(movie);
