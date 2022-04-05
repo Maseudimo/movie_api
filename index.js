@@ -86,20 +86,6 @@ app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req
      });
  });
 
-// READ: Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by _id to the user
-app.get('/movies/:_id', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Movies.findOne({ '_id': req.params._id }) // Find the movie by ID
-    .then((movie) => {
-      if (movie) { // If movie was found, return json, else throw error
-        res.status(200).json(movie);
-      } else {
-        res.status(400).send('Movie not found');
-      };
-    })
-    .catch((err) => {
-      res.status(500).send('Error: ' + err);
-    });
-});
 
 // READ: Return data about a genre (description) by name/title (e.g., “Fantasy”)
 app.get('/movies/genre/:Name', passport.authenticate('jwt', { session: false }), (req, res) => {
