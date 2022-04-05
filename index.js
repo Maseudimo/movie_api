@@ -73,7 +73,7 @@ app.get('/movies',
 
 // READ: Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user
 app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req, res) => {
-   Movies.findOne({ 'Movie.Title': req.params.Title }) // Find the movie by title
+   Movies.findOne({ 'Title': req.params.Title }) // Find the movie by title
      .then((movie) => {
        if (movie) { // If movie was found, return json, else throw error
          res.status(200).json(movie);
@@ -87,8 +87,8 @@ app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req
  });
 
 // READ: Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by _id to the user
-app.get('/movies/:MovieID', passport.authenticate('jwt', { session: false }), (req, res) => {
-  Movies.findOne({ '_id.MovieID': req.params.MovieID }) // Find the movie by ID
+app.get('/movies/:_id', passport.authenticate('jwt', { session: false }), (req, res) => {
+  Movies.findOne({ '_id': req.params._id }) // Find the movie by ID
     .then((movie) => {
       if (movie) { // If movie was found, return json, else throw error
         res.status(200).json(movie);
