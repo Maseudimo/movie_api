@@ -19,8 +19,8 @@ Users = Models.User;
 
 // Import and use CORS, set allowed origins
 const cors = require('cors');
-/* UNCOMMENT TO SET CORS POLICY!!
-//let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'https://mehos-myflix-app.herokuapp.com/', 'http://localhost:1234'];
+
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'https://mehos-myflix-app.herokuapp.com/', 'http://localhost:1234'];
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin) return callback(null, true);
@@ -31,12 +31,10 @@ app.use(cors({
     return callback(null, true);
   }
 }));
-UNCOMMENT TO SET CORS POLICY
-*/
 
-app.use(cors({
-    origin: '*'
-}));
+
+
+
 
 // Import express-validator to validate input fields
 const { check, validationResult } = require('express-validator');
