@@ -58,18 +58,19 @@ mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnified
 // Log basic request data in terminal using Morgan middleware library
 app.use(morgan('common'));
 
+
 // READ: Return a list of ALL movies to the user
-app.get('/movies',
-  passport.authenticate('jwt', {session: false}),
-  (req, res) => {
-    Movies.find()
-      .then((movies) => {
-        res.status(200).json(movies);
-      })
-      .catch((err) => {
-        res.status(500).send('Error: ' + err);
-      });
-  });
+app.get("/movies", function (req, res) {
+  Movies.find()
+    .then(function (movies) {
+      res.status(201).json(movies);
+    })
+    .catch(function (error) {
+      console.error(error);
+      res.status(500).send("Error: " + error);
+    });
+});
+
 
 // READ: Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user
 app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req, res) => {
