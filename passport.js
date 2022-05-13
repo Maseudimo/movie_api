@@ -7,31 +7,36 @@ let Users = Models.User,
   JWTStrategy = passportJWT.Strategy,
   ExtractJWT = passportJWT.ExtractJwt;
 
-// Strategy to define basic HTTP authentication for login requests
-passport.use(new LocalStrategy({
-  // Take username and password from request body
-  usernameField: 'Username',
-  passwordField: 'Password'
-}, (username, password, callback) => {
-  console.log(username + ' ' + password);
-  // Use mongoose to check database for user with same username
-  Users.findOne({Username: username}, (err, user) => {
-    // Error handling
-    if(err){
-      console.log(err);
-      return callback(err);
-    }
-    // No user matches username
-    if(!user){
-      console.log('incorrect username');
-      return callback(null, false, {message: 'Incorrect username or password.'});
-    }
-    // Username matches - Execute callback
-    console.log('finished');
-    return callback(null, user);
-  });
-}));
+  passport.use(
+    new LocalStrategy(
+      {
+        usernameField: "Username",
+        passwordField: "Password",
+      },
+      (username, password, callback) => {
+        console.log(username + "  " + password);
+        Users.findOne({ Username: username }, (error, user) => {
+          if (error) {
+            console.log(error);
+            return callback(error);
+          }
 
+          if (!user) {
+            console.log("incorrect username");
+            return callback(null, false, { message: "Incorrect username." });
+          }
+
+          if (!user.validatePassword(password)) {
+            console.log("incorrect password");
+            return callback(null, false, { message: "Incorrect password." });
+          }
+
+          console.log("finished");
+          return callback(null, user);
+        });
+      }
+    )
+  );
 // Strategy to authenticate users based on JWT
 passport.use(new JWTStrategy({
   // Extract JWT from header of HTTP request
